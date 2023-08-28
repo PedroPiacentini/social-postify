@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateMediaDto } from './dto/create-media.dto';
 import { UpdateMediaDto } from './dto/update-media.dto';
 import { MediasRepository } from './medias.repository';
@@ -11,12 +11,14 @@ export class MediasService {
     return await this.repository.create(createMediaDto);
   }
 
-  findAll() {
-    return `This action returns all medias`;
+  async findAll() {
+    return await this.repository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} media`;
+  async findOne(id: number) {
+    const media = await this.repository.findOne(id);
+    if (!media) throw new HttpException("Media não encontrada", HttpStatus.NOT_FOUND);
+    return media;
   }
 
   update(id: number, updateMediaDto: UpdateMediaDto) {

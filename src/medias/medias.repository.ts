@@ -13,11 +13,11 @@ export class MediasRepository {
   }
 
   findAll() {
-    return `This action returns all medias`;
+    return this.prisma.media.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} media`;
+    return this.prisma.media.findUnique({where: {id}});
   }
 
   update(id: number, updateMediaDto: UpdateMediaDto) {
