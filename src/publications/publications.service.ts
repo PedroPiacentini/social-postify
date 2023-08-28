@@ -16,12 +16,14 @@ export class PublicationsService {
     
   }
 
-  findAll() {
-    return `This action returns all publications`;
+  async findAll() {
+    return await this.repository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} publication`;
+  async findOne(id: number) {
+    const publication = await this.repository.findOne(id);
+    if (!publication) throw new HttpException("Publication não encontrada", HttpStatus.NOT_FOUND);
+    return publication;
   }
 
   update(id: number, updatePublicationDto: UpdatePublicationDto) {

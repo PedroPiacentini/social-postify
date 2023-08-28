@@ -12,11 +12,11 @@ export class PublicationsRepository {
   }
 
   findAll() {
-    return `This action returns all publications`;
+    return this.prisma.publication.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} publication`;
+    return this.prisma.publication.findUnique({where: {id}});
   }
 
   update(id: number, updatePublicationDto: UpdatePublicationDto) {
