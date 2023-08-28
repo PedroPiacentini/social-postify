@@ -24,12 +24,12 @@ export class MediasService {
   async update(id: number, updateMediaDto: UpdateMediaDto) {
     const media = await this.repository.findOne(id);
     if (!media) throw new HttpException("Media não encontrada", HttpStatus.NOT_FOUND);
-    return this.repository.update(id, updateMediaDto);
+    return await this.repository.update(id, updateMediaDto);
   }
 
   async remove(id: number) {
     const media = await this.repository.findOne(id);
     if (!media) throw new HttpException("Media não encontrada", HttpStatus.NOT_FOUND);
-    return this.repository.remove(id);
+    return await this.repository.remove(id);
   }
 }

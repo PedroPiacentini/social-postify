@@ -24,10 +24,12 @@ export class PostsService {
   async update(id: number, updatePostDto: UpdatePostDto) {
     const post = await this.repository.findOne(id);
     if (!post) throw new HttpException("Post não encontrado", HttpStatus.NOT_FOUND);
-    return this.repository.update(id, updatePostDto);
+    return await this.repository.update(id, updatePostDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: number) {
+    const post = await this.repository.findOne(id);
+    if (!post) throw new HttpException("Post não encontrado", HttpStatus.NOT_FOUND);
+    return await this.repository.remove(id);
   }
 }
