@@ -26,8 +26,14 @@ export class PublicationsService {
     return publication;
   }
 
-  update(id: number, updatePublicationDto: UpdatePublicationDto) {
-    return `This action updates a #${id} publication`;
+  async update(id: number, updatePublicationDto: UpdatePublicationDto) {
+    const publication = await this.repository.findOne(id);
+    if (!publication) throw new HttpException("Publication não encontrada", HttpStatus.NOT_FOUND);
+    try {
+      return await this.repository.update(id, updatePublicationDto);
+    } catch {
+      throw new HttpException("Media e/ou Post não encontrado(s)", HttpStatus.NOT_FOUND);
+    }
   }
 
   remove(id: number) {
