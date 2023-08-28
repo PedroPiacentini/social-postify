@@ -36,7 +36,9 @@ export class PublicationsService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} publication`;
+  async remove(id: number) {
+    const publication = await this.repository.findOne(id);
+    if (!publication) throw new HttpException("Publication não encontrada", HttpStatus.NOT_FOUND);
+    return await this.repository.remove(id);
   }
 }

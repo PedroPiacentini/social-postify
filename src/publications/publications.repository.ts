@@ -27,6 +27,6 @@ export class PublicationsRepository {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} publication`;
+    return this.prisma.publication.delete({where:{id}});
   }
 }
