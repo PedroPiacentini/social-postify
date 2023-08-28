@@ -19,8 +19,11 @@ export class PostsRepository {
     return this.prisma.post.findUnique({where: {id}});
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  update(id: number, data: UpdatePostDto) {
+    return this.prisma.post.update({
+      where: {id},
+      data
+    });
   }
 
   remove(id: number) {

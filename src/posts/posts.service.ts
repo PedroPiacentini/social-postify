@@ -16,13 +16,15 @@ export class PostsService {
   }
 
   async findOne(id: number) {
-    const media = await this.repository.findOne(id);
-    if (!media) throw new HttpException("Post não encontrado", HttpStatus.NOT_FOUND);
-    return media;
+    const post = await this.repository.findOne(id);
+    if (!post) throw new HttpException("Post não encontrado", HttpStatus.NOT_FOUND);
+    return post;
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: number, updatePostDto: UpdatePostDto) {
+    const post = await this.repository.findOne(id);
+    if (!post) throw new HttpException("Post não encontrado", HttpStatus.NOT_FOUND);
+    return this.repository.update(id, updatePostDto);
   }
 
   remove(id: number) {
