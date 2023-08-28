@@ -20,11 +20,14 @@ export class MediasRepository {
     return this.prisma.media.findUnique({where: {id}});
   }
 
-  update(id: number, updateMediaDto: UpdateMediaDto) {
-    return `This action updates a #${id} media`;
+  update(id: number, data: UpdateMediaDto) {
+    return this.prisma.media.update({
+      where: {id},
+      data
+    })
   }
 
   remove(id: number) {
-    return `This action removes a #${id} media`;
+    return this.prisma.media.delete({where: {id}});
   }
 }

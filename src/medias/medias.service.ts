@@ -21,11 +21,15 @@ export class MediasService {
     return media;
   }
 
-  update(id: number, updateMediaDto: UpdateMediaDto) {
-    return `This action updates a #${id} media`;
+  async update(id: number, updateMediaDto: UpdateMediaDto) {
+    const media = await this.repository.findOne(id);
+    if (!media) throw new HttpException("Media não encontrada", HttpStatus.NOT_FOUND);
+    return this.repository.update(id, updateMediaDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} media`;
+  async remove(id: number) {
+    const media = await this.repository.findOne(id);
+    if (!media) throw new HttpException("Media não encontrada", HttpStatus.NOT_FOUND);
+    return this.repository.remove(id);
   }
 }
