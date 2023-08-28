@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostsRepository } from './posts.repository';
@@ -15,8 +15,10 @@ export class PostsService {
     return await this.repository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: number) {
+    const media = await this.repository.findOne(id);
+    if (!media) throw new HttpException("Post não encontrado", HttpStatus.NOT_FOUND);
+    return media;
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
