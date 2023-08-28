@@ -1,19 +1,14 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreatePublicationDto } from './dto/create-publication.dto';
 import { UpdatePublicationDto } from './dto/update-publication.dto';
-import { PublicationsRepository } from './publications.repository';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class PublicationsService {
-  constructor(private readonly repository: PublicationsRepository) {}
+export class PublicationsRepository {
+  constructor(private readonly prisma: PrismaService) {}
 
-  async create(createPublicationDto: CreatePublicationDto) {
-    try {
-      return await this.repository.create(createPublicationDto);
-    } catch {
-      throw new HttpException("Media e/ou Post não encontrado(s)", HttpStatus.NOT_FOUND);
-    }
-    
+  create(data: CreatePublicationDto) {
+    return this.prisma.publication.create({data});
   }
 
   findAll() {
